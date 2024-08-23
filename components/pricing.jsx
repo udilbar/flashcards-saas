@@ -1,22 +1,47 @@
+"use client"
+
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import getStripe from "@/utils/get-stripe";
 
 export function Pricing() {
+  const handleSubmit = async () => {
+    const checkoutSession = await fetch('/api/checkout_session', {
+      method: 'POST',
+      headers: { origin: 'http://localhost:3000' },
+    })
+    const checkoutSessionJson = await checkoutSession.json()
+    if (checkoutSession.statusCode === 500) {
+      console.error(checkoutSession.message)
+      return
+    }
+  
+    const stripe = await getStripe()
+    const {error} = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id,
+    })
+  
+    if (error) {
+      console.warn(error.message)
+    }
+  }
+  
   const plans = [
     {
       title: "Basic",
-      price: "$9.99/month",
+      price: "Free",
       features: [
         "Access to all flashcards",
         "Basic study tools",
         "Limited AI suggestions",
       ],
       buttonLabel: "Get Started",
+      onClick: () => 0
     },
     {
       title: "Pro",
-      price: "$19.99/month",
+      price: "$0.99/month",
       features: [
         "All Basic features",
         "Advanced study tools",
@@ -24,6 +49,7 @@ export function Pricing() {
         "Priority support",
       ],
       buttonLabel: "Upgrade Now",
+      onClick: handleSubmit
     },
   ];
 
@@ -53,7 +79,7 @@ export function Pricing() {
                     <li key={idx}>{feature}</li>
                   ))}
                 </ul>
-                <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3">
+                <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3" onClick={plan.onClick}>
                   {plan.buttonLabel}
                 </Button>
               </CardContent>
