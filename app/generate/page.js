@@ -7,6 +7,8 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { doc, getDoc, setDoc, collection, writeBatch } from 'firebase/firestore';
+import db from '@/firebase';
 
 export default function Generate() {
   const [text, setText] = useState('');
@@ -143,8 +145,8 @@ export default function Generate() {
         flashcards.length > 0 && (
           <div className="flex flex-wrap -mx-2 mt-4">
             {flashcards.map((flashcard, index) => (
-              <div key={index} className="w-full sm:w-1/2 md:w-1/3 p-2">
-                <div className="group perspective-1000">
+              <div key={index} className="w-full h-full sm:w-1/2 md:w-1/3 p-2">
+                <div className="group perspective-1000 h-64 text-center">
                   <div
                     className={`w-full h-full cursor-pointer shadow-lg hover:shadow-xl transition-shadow rounded-lg overflow-hidden transform-style-preserve-3d duration-500`}
                     onClick={() => handleCardClick(index)}
