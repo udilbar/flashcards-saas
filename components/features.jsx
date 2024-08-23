@@ -18,7 +18,7 @@ export function Features() {
   ];
 
   return (
-    <section className="bg-white py-16" id="features">
+    <section className="py-16" id="features">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">
           Key Features

@@ -4,6 +4,8 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import getStripe from "@/utils/get-stripe";
+import Link from 'next/link';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
 export function Pricing() {
   const handleSubmit = async () => {
@@ -37,7 +39,8 @@ export function Pricing() {
         "Limited AI suggestions",
       ],
       buttonLabel: "Get Started",
-      onClick: () => 0
+      asChild: true,
+      href: "/sign-up"
     },
     {
       title: "Pro",
@@ -54,7 +57,7 @@ export function Pricing() {
   ];
 
   return (
-    <section className="bg-gray-50 py-16" id="pricing">
+    <section className="py-16" id="pricing">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">
           Choose Your Plan
@@ -79,9 +82,22 @@ export function Pricing() {
                     <li key={idx}>{feature}</li>
                   ))}
                 </ul>
-                <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3" onClick={plan.onClick}>
+                {
+                  plan.asChild ? <>
+                  <SignedIn>
+                    <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3" asChild>
+                      <Link href="/generate">Get Started</Link>
+                    </Button>
+                  </SignedIn>
+                  <SignedOut>
+                    <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3">
+                      <Link href="/sign-up">Get Started</Link>
+                    </Button> 
+                  </SignedOut>
+                  </> : <Button className="text-white bg-blue-600 hover:bg-blue-700 w-full py-3" onClick={plan.onClick}>
                   {plan.buttonLabel}
                 </Button>
+                }
               </CardContent>
             </Card>
           ))}

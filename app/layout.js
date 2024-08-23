@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +15,46 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <header className="bg-white shadow-md relative">
+            <div className="container mx-auto px-4 py-4 flex justify-between items-center gap-16">
+              <h1 className="text-2xl font-bold text-gray-800">Flashcards SaaS</h1>
+              <nav className="flex items-center justify-between grow">
+                <div className="flex space-x-4">
+                  <Link href="/" className="text-gray-700 hover:text-gray-900">Home</Link>
+                  <Link href="#features" className="text-gray-700 hover:text-gray-900">Features</Link>
+                  <Link href="#pricing" className="text-gray-700 hover:text-gray-900">Pricing</Link>
+                </div>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+                <SignedOut>
+                  <Button className="text-white bg-blue-600 hover:bg-blue-700" asChild>
+                    <Link href="/sign-in">Sign In</Link>
+                  </Button>
+                </SignedOut>
+              </nav>
+            </div>
+          </header>
+          <main class="bg-gray-50 grow relative z-1">
+            {children}
+            {/* Animated Circles */}
+            <div className="absolute inset-0 z-[-1] overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+              </div>
+            </div>
+          </main>
+          <footer className="bg-gray-100 py-8">
+            <div className="container mx-auto px-4 text-center">
+              <p className="text-gray-600">&copy; 2024 Flashcards SaaS. All rights reserved.</p>
+            </div>
+          </footer>
+        </body>
       </html>
     </ClerkProvider>
   );

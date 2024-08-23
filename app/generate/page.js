@@ -89,8 +89,8 @@ export default function Generate() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl py-8">
-      <div className="mb-8 text-center">
+    <div className="container mx-auto py-8 flex flex-col">
+      <div className="mb-8 text-center max-w-2xl w-full mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           Generate Flashcards
         </h1>
@@ -132,7 +132,7 @@ export default function Generate() {
                     <div className={`w-full h-full flex items-center justify-center bg-white p-4 transform rotate-y-180 backface-hidden ${
                       !flipped[index] ? 'hidden' : '' 
                     }`}>
-                      <h5 className="text-lg font-semibold text-gray-800">
+                      <h5 className="text-lg font-semibold text-gray-800 bg-[#f3e8a2]">
                         {flashcard.back}
                       </h5>
                     </div>
@@ -143,7 +143,7 @@ export default function Generate() {
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="default" className="w-full bg-blue-600 text-white hover:bg-blue-700 mt-4">Save</Button>
+              <Button variant="default" className="w-full max-w-2xl self-center bg-blue-600 text-white hover:bg-blue-700 mt-4">Save</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

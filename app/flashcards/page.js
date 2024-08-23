@@ -37,7 +37,10 @@ export default function Flashcards() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-8">
+    <div className="container mx-auto max-w-2xl py-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        Flashcard sets
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {flashcards.map((flashcard, index) => (
           <div key={index} className="flex">

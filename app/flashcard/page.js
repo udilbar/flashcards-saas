@@ -5,6 +5,7 @@ import { collection, doc, getDocs, query, where } from "firebase/firestore"
 import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import db from "@/firebase"
+import capitalizeFirstLetter from "@/utils/capitialize-first-letter"
 
 export default function Flashcard() {
   const { isLoaded, isSignedIn, user } = useUser()
@@ -43,7 +44,10 @@ export default function Flashcard() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl py-8">
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        {capitalizeFirstLetter(search)}
+      </h1>
       {
         flashcards.length > 0 && (
           <div className="flex flex-wrap -mx-2 mt-4">
