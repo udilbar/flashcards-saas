@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
           </header>
           <main class="bg-gray-50 grow relative z-1">
             {children}
+            <Analytics />
             {/* Animated Circles */}
             <div className="absolute inset-0 z-[-1] overflow-hidden">
               <div className="absolute inset-0">
